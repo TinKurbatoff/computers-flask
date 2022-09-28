@@ -26,8 +26,8 @@
     Feel free to email me with any questions.
 """
 
-from flask import Flask, jsonify, request
 from copy import copy
+from flask import Flask, jsonify, request
 
 ## ——————————————— VIRTUAL DATABASE —————————————————————
 COMPUTERS_DB = [
