@@ -79,7 +79,6 @@ def filter_by_argument(data_set, key=None, value=None):
 
 def sort_by_argument(data_set, key='model'):
     """ Sorting data_set by argument"""
-    raise Hello
     response_data = sorted(data_set, key=lambda d: d[key]) 
     return response_data           
 
