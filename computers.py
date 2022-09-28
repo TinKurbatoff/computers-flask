@@ -29,39 +29,39 @@
 from copy import copy
 from flask import Flask, jsonify, request
 
-## ——————————————— VIRTUAL DATABASE —————————————————————
+# ——————————————— VIRTUAL DATABASE —————————————————————
 COMPUTERS_DB = [
-                {
-                    "id": "1",
-                    "model": "Lenovo Thinkpad",
-                    "disk_space": "512GB",
-                    "screen_size": "13in"
-                },
-                {
-                    "id": "2",
-                    "model": "Legion 5",
-                    "disk_space": "1TB",
-                    "screen_size": "17in"
-                },
-                {
-                    "id": "3",
-                    "model": "Macbook Pro",
-                    "disk_space": "1TB",
-                    "screen_size": "15in"
-                },
-                {
-                    "id": "4",
-                    "model": "Surface Pro 7",
-                    "disk_space": "256GB",
-                    "screen_size": "13in"
-                },
-                {
-                    "id": "5",
-                    "model": "Surface Pro 6",
-                    "disk_space": "512GB",
-                    "screen_size": "13in"
-                }
-            ]
+    {
+        "id": "1",
+        "model": "Lenovo Thinkpad",
+        "disk_space": "512GB",
+        "screen_size": "13in"
+    },
+    {
+        "id": "2",
+        "model": "Legion 5",
+        "disk_space": "1TB",
+        "screen_size": "17in"
+    },
+    {
+        "id": "3",
+        "model": "Macbook Pro",
+        "disk_space": "1TB",
+        "screen_size": "15in"
+    },
+    {
+        "id": "4",
+        "model": "Surface Pro 7",
+        "disk_space": "256GB",
+        "screen_size": "13in"
+    },
+    {
+        "id": "5",
+        "model": "Surface Pro 6",
+        "disk_space": "512GB",
+        "screen_size": "13in"
+    }
+]
 
 app = Flask(__name__)
 
@@ -76,6 +76,7 @@ def filter_by_argument(data_set, key=None, value=None):
             response_data.append(computer)
 
     return response_data
+
 
 def sort_by_argument(data_set, key='model'):
     """ Sorting data_set by argument"""
@@ -92,8 +93,9 @@ def sorted_computers():
         Request example:
             /computers/sorted/?screen_size """
 
-    ### Make a "request" to the "database"
-    data = copy(COMPUTERS_DB)  # It would be complex data, in that case I would use deepcopy
+    # Make a "request" to the "database"
+    # It would be complex data, in that case I would use deepcopy
+    data = copy(COMPUTERS_DB)
     if len(request.args):
         arg = list(request.args)[0]  # pick the first argument only
         if arg in data[0].keys():
@@ -110,19 +112,20 @@ def computers():
         Request example:
             /computers/?model=123&disk_space=123&screen_size=123 """
 
-    ### Make a "request" to the "database"
+    # Make a "request" to the "database"
     data = copy(COMPUTERS_DB)
-    data = sort_by_argument(data, 'model')  # Sort the query result by a model title
+    # Sort the query result by a model title
+    data = sort_by_argument(data, 'model')
 
     if len(request.args):
-        ### There are some arguments, filter data by the arguments
+        # There are some arguments, filter data by the arguments
         for arg in request.args:
             # Filter results by each argument value
             argument_value = request.args.get(arg, None)
             data = filter_by_argument(data, arg, argument_value)
 
     else:
-        ### Default case (no arguments)
+        # Default case (no arguments)
         pass  # ** used for debug **
 
     return jsonify(data)  # Reply just data
